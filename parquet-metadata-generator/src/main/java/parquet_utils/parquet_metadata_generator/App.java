@@ -18,6 +18,9 @@ public class App {
 		
 		Path dir = new Path(args[0]);
 		Configuration conf = new Configuration();
+		conf.set("fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
+		conf.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());
+		
 		FileSystem fs = dir.getFileSystem(conf);
 		
 		ParquetFileWriter.writeMetadataFile(conf, dir, ParquetFileReader.readAllFootersInParallel(conf, fs.getFileStatus(dir)));
